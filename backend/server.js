@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 const PORT = 5000;
@@ -8,10 +9,7 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/formsdb",{
-    useNewUrlParser:true,
-    useUnifiedTopology:true,
-})
+mongoose.connect("mongodb://localhost:27017/formsdb")
 .then(()=>console.log("MongoDB connected"))
 .catch((err)=>console.error("MongoDB connection error:",err));
 
@@ -67,6 +65,13 @@ app.post("/login", async(req,res) => {
     }
 
 });
+
+// app.use(express.static(path.join(__dirname, "../forms/build")));
+
+// app.get("*", (req,res) => {
+//     res.sendFile(path.join(__dirname,"../forms/build", "index.html"));
+// });
+
 
 app.listen(PORT, ()=>{
     console.log(`server running at http://localhost:${PORT}`);
